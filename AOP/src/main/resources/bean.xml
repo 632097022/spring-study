@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+<!--配置一个Hello的bean  等同于Hello hello = new HelloImpl();-->
+   <bean id="hello" class="com.spring.HelloImpl"/>
+       <!--配置一个MyBeforeAdvice前置增强的bean-->
+       <bean id="mybeforeAdvice" class="com.spring.MyBeforeAdvice"/>
+    <!--配置Aop-->
+    <aop:config>
+        <aop:aspect id="before" ref="mybeforeAdvice">
+            <aop:pointcut id="myPointcut" expression="execution(* com.spring.*.*(..))"/>
+            <aop:before method="beforeMethod" pointcut-ref="myPointcut"/>
+
+        </aop:aspect>
+    </aop:config>
+
+
+
+<bean id="userDao" class="com.experice.UserDaoImple"/>
+    <bean id="BeforeAdvice" class="com.experice.BeforeAdvice"/>
+    <aop:config>
+        <aop:aspect id="advice" ref="BeforeAdvice">
+        <aop:pointcut id="pointcut" expression="execution(* com.experice.*.*(..))"/>
+        <aop:before method="connectDB" pointcut-ref="pointcut"/>
+        </aop:aspect>
+    </aop:config>
+    <!--书99页-->
+<aop:aspectj-autoproxy/>
+    <bean id="fighter" class="com.experice.Fighter"/>
+    <bean id="tiger" class="com.experice.Tiger"/>
+    <!--配置图片相关bean-->
+    <aop:aspectj-autoproxy/>
+    <bean id="imageCopy" class="com.experice.ImageCopy"/>
+    <bean id="imageHandler" class="com.experice.ImageHandler"/>
+
+</beans>
+
